@@ -98,7 +98,7 @@
                         </ul>
                     </li>
                     <li class="nav-item">
-                        <a href="../widgets.html" class="nav-link">
+                        <a href="{{ route('about.list') }}" class="nav-link">
                             <i class="nav-icon fas fa-th"></i>
                             <p>
                                 About

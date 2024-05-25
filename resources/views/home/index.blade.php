@@ -1,28 +1,49 @@
+@if(Session::has('name'))
 @auth
 @extends('layouts.app-master')
 
 @section('content')
-    <div class="bg-light p-5 rounded">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>General Form</h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item active">General Form</li>
+                    </ol>
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+            <!-- Default box -->
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Title</h3>
 
-            <h1>Dashboard</h1>
-            <p class="lead">Only authenticated users can access this section.</p>
-            <a class="btn btn-lg btn-primary" href="https://codeanddeploy.com" role="button">View more tutorials here &raquo;</a>
+                    <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                            <i class="fas fa-minus"></i>
+                        </button>
+                        <button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    Start creating your amazing application!
+                </div>
+                <!-- /.card-body -->
+                <div class="card-footer">
+                    Footer
+                </div>
+                <!-- /.card-footer-->
+            </div>
+            <!-- /.card -->
 
-
-    </div>
 @endsection
 @endauth
-
-@guest
-    @extends('site.layouts.app')
-
-    @section('css')
-        <link href="{{ asset('../site-assets/css/moving-box-carousel.css') }}" rel="stylesheet">
-    @endsection
-
-    @include('site.home.index')
-
-    @section('js')
-        <script src="{{ asset('site-assets/js/moving-box-carousel.js') }}"></script>
-    @endsection
-@endguest
+@endif

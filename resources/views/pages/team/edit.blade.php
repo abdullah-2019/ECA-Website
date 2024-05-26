@@ -9,12 +9,12 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1>About</h1>
+                        <h1>team</h1>
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
                             <li class="breadcrumb-item"><a href="#">Home</a></li>
-                            <li class="breadcrumb-item active">About</li>
+                            <li class="breadcrumb-item active">team</li>
                         </ol>
                     </div>
                 </div>
@@ -23,9 +23,9 @@
         <!-- Main content -->
         <section class="content">
             <div class="container-fluid">
-                <div class="card card-primary">
+                <div class="card card-warning">
                     <div class="card-header">
-                        <h3 class="card-title">Edit ({{ $about->title }})</h3>
+                        <h3 class="card-title">Edit ({{ $team->title }})</h3>
 
                         <div class="card-tools">
                             <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
@@ -36,23 +36,41 @@
                             </button>
                         </div>
                     </div>
-                    <form  action="{{ route('about.update',$about->id) }}" method="POST" enctype="multipart/form-data">
+                    <form  action="{{ route('team.update',$team->id) }}" method="POST" enctype="multipart/form-data">
 
                         <div class="card-body">
                             <!-- form start -->
 
                             <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                                <a class="btn btn-primary btn-sm" href="{{ route('about.list') }}"><i class="fa fa-arrow-left"></i> Back</a>
+                                <a class="btn btn-warning btn-sm" href="{{ route('team.list') }}"><i class="fa fa-arrow-left"></i> Back</a>
                             </div>
 
                             @csrf
                             @method('PUT')
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Title</label>
-                                <input type="text" name="title" value="{{ $about->title }}" class="form-control @error('title') is-invalid @enderror"
+                                <input type="text" name="title" value="{{ $team->title }}" class="form-control @error('title') is-invalid @enderror"
                                        id="inputName"
                                        placeholder="Title">
                                 @error('title')
+                                <div class="form-text text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Position</label>
+                                <input type="text" name="position"  value="{{ $team->position }}" class="form-control @error('position') is-invalid @enderror"
+                                       id="inputName"
+                                       placeholder="Position">
+                                @error('position')
+                                <div class="form-text text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Social Links</label>
+                                <input type="text" name="social_links"  value="{{ $team->social_links }}" class="form-control @error('social_links') is-invalid @enderror"
+                                       id="inputName"
+                                       placeholder="Social Links">
+                                @error('social_links')
                                 <div class="form-text text-danger">{{ $message }}</div>
                                 @enderror
                             </div>
@@ -73,7 +91,7 @@
                                     </div>
 
                                 </div>
-                                <img src="{{ asset($about->image) }}" width="300px">
+                                <img src="{{ asset($team->image) }}" width="300px">
 
                             </div>
                             <div class="form-group">
@@ -83,7 +101,7 @@
                                           name="description"
                                           id="editor"
                                           placeholder="Description">  @php
-                                        $lastLetter = $about->description;
+                                        $lastLetter = $team->description;
                                      echo  $lastLetter;
                                     @endphp</textarea>
                                 @error('description')
@@ -95,7 +113,7 @@
                         </div>
                         <!-- /.card-body -->
                         <div class="card-footer">
-                            <button type="submit" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i> Update</button>
+                            <button type="submit" class="btn btn-warning"><i class="fa-solid fa-floppy-disk"></i> Update</button>
                         </div>
                     </form>
                     <!-- /.card-footer-->

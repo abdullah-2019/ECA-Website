@@ -9,12 +9,12 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1>About</h1>
+                        <h1>Services</h1>
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
                             <li class="breadcrumb-item"><a href="#">Home</a></li>
-                            <li class="breadcrumb-item active">About</li>
+                            <li class="breadcrumb-item active">Services</li>
                         </ol>
                     </div>
                 </div>
@@ -33,7 +33,7 @@
                 @endsession
                 <div class="row mb-4">
                     <div class="col-md-4">
-                    <form class="float-left" action="{{ route('about.search') }}" method="GET">
+                    <form class="float-left" action="{{ route('services.search') }}" method="GET">
                         <div class="input-group">
                             <input name="search" class="form-control form-control-sidebar" type="search" placeholder="Search" aria-label="Search">
                             <div class="input-group-append">
@@ -46,17 +46,17 @@
                     </div>
                     <div class="col-md-4"></div>
                     <div class="col-md-4">
-                    <a class="btn btn-success btn-sm float-right" href="{{ route('about.create') }}"> <i class="fa fa-plus"></i> Add New</a>
+                    <a class="btn btn-dark btn-sm float-right" href="{{ route('services.create') }}"> <i class="fa fa-plus"></i> Add New</a>
                     </div>
                 </div>
 
         <div class="row">
-            @forelse ($abouts as $about)
+            @forelse ($services as $service)
             <div class="col-md-4">
                 <!-- DIRECT CHAT PRIMARY -->
-                <div class="card card-primary card-outline direct-chat direct-chat-primary">
+                <div class="card card-dark card-outline direct-chat direct-chat-dark">
                     <div class="card-header">
-                        <h3 class="card-title">{{ $about->title }}</h3>
+                        <h3 class="card-title">{{ $service->title }}</h3>
 
                         <div class="card-tools">
                             <button type="button" class="btn btn-tool" data-card-widget="collapse">
@@ -72,16 +72,16 @@
                     <div class="card-body ">
                         <!-- Conversations are loaded here -->
                         <div class="card-img-top">
-                            <img src="{{ asset($about->image) }}" class="img-fluid" style="max-height: 200px; min-width: 300px;">
+                            <img src="{{ asset($service->image) }}" class="img-fluid" style="max-height: 200px; min-width: 300px;">
                         </div>
                         <div class="row">
                             @php
                                  $lastLetter = '';
                             @endphp
-                            @if($lastLetter != $about->description)
+                            @if($lastLetter != $service->description)
                                 <div class="text-justify p-4">
                                 @php
-                                    $lastLetter = strip_tags($about->description);
+                                    $lastLetter = strip_tags($service->description);
                                  $string = $lastLetter;
                             if (strlen($string) > 150) {
                                 $stringCut = substr($string, 0, 150);
@@ -98,11 +98,11 @@
                     </div>
                     <!-- /.card-body -->
                     <div class="card-footer">
-                        <form action="{{ route('about.destroy',$about->id) }}" method="POST">
+                        <form action="{{ route('services.destroy',$service->id) }}" method="POST">
 
-                            <a class="btn btn-info btn-sm" href="{{ route('about.show',$about->id) }}"><i class="fa-solid fa-list"></i> Show</a>
+                            <a class="btn btn-info btn-sm" href="{{ route('services.show',$service->id) }}"><i class="fa-solid fa-list"></i> Show</a>
 
-                            <a class="btn btn-primary btn-sm" href="{{ route('about.edit',$about->id) }}"><i class="fa-solid fa-pen-to-square"></i> Edit</a>
+                            <a class="btn btn-primary btn-sm" href="{{ route('services.edit',$service->id) }}"><i class="fa-solid fa-pen-to-square"></i> Edit</a>
 
                             @csrf
                             @method('DELETE')
@@ -122,7 +122,7 @@
             <!-- /.col -->
 
         </div>
-                {!! $abouts->withQueryString()->links('pagination::bootstrap-5') !!}
+                {!! $services->withQueryString()->links('pagination::bootstrap-5') !!}
 
             </div>
         </section>

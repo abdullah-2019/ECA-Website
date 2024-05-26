@@ -13,6 +13,15 @@ return new class extends Migration
     {
         Schema::create('services', function (Blueprint $table) {
             $table->id();
+            $table->id('category_id');
+            $table->string('title');
+            $table->text('description');
+            $table->string('image')->nullable();
+            $table->timestamps();
+        });
+        Schema::create('categories', function (Blueprint $table) {
+            $table->id();
+            $table->string('category');
             $table->timestamps();
         });
     }
@@ -23,5 +32,6 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('services');
+        Schema::dropIfExists('categories');
     }
 };

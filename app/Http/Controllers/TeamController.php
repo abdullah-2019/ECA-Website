@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers;
 
+
 use App\Models\Team;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\View\View;
 
 class TeamController extends Controller
 {
@@ -18,9 +22,19 @@ class TeamController extends Controller
     /**
      * Show the form for creating a new resource.
      */
+    public function list(): View
+    {
+        $teams = Team::latest()->paginate(3);
+        return view('pages.team.list',compact('teams'))
+            ->with('i', (request()->input('page', 1) - 1) * 5);
+
+    }
+    /**
+     * Show the form for creating a new resource.
+     */
     public function create()
     {
-        //
+        return view('pages.team.create');
     }
 
     /**
@@ -28,38 +42,93 @@ class TeamController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'title' => 'required',
+            'position' => 'required',
+            'social_links' => 'required',
+            'description' => 'required',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+        $imageName = time().'.'.$request->image->extension();
+        $request->image->move(public_path('images'), $imageName);
+        $team = new Team();
+        $team->title = $request->title;
+        $team->position = $request->position;
+        $team->social_links = $request->social_links;
+        $team->description = $request->description;
+        $team->image = 'images/'.$imageName;
+        $team->save();
+        return redirect()->route('team.list')->with('success', 'Data created successfully.');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Team $team)
+    public function show($id): View
     {
-        //
+        $team=Team::where('id',$id)->first();
+        return view('pages.team.show', compact('team'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Team $team)
+    public function edit($id): View
     {
-        //
+        $team=Team::where('id',$id)->first();
+        return view('pages.team.edit', compact('team'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Team $team)
+    public function update(Request $request, Team $team): RedirectResponse
     {
+        $request->validate([
+            'title' => 'required',
+            'position' => 'required',
+            'social_links' => 'required',
+            'description' => 'required'
+        ]);
+
+        $input = $request->all();
+
+        if ($image = $request->file('image')) {
+            $Images = time().'.'. $image->extension();
+            $image->move(public_path('images'), $Images);
+            $input['image'] = 'images/'.$Images;
+        }else{
+            unset($input['image']);
+        }
+
+        $team->update($input);
+
+        return redirect()->route('team.list')
+            ->with('success', 'Data updated successfully');
         //
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Team $team)
+    public function destroy( $id): RedirectResponse
     {
-        //
+        Team::where('id', $id)->delete();
+
+        return redirect()->route('team.list')
+            ->with('success', 'Data deleted successfully');
+    }
+    public function search(Request $request) :View
+    {
+        $teams = Team::query()
+            ->when(
+                $request->search,
+                function(Builder $builder) use ($request){
+                    $builder->where('description', 'like', "%{$request->search}%")
+                        ->orWhere('title', 'like', "%{$request->search}%");
+                }
+            )->paginate(3);
+        return view('pages.team.list',compact('teams'));
+
     }
 }

@@ -6,12 +6,12 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>About</h1>
+                    <h1>team</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item active">About</li>
+                        <li class="breadcrumb-item active">team</li>
                     </ol>
                 </div>
             </div>
@@ -20,12 +20,12 @@
     <!-- Main content -->
     <section class="content">
         <div class="container-fluid">
-            <div class="card card-primary">
+            <div class="card card-warning">
                 <div class="card-header">
-                    <h3 class="card-title">{{ $about->title }}</h3>
+                    <h3 class="card-title">{{ $team->title }}</h3>
 
                     <div class="card-tools">
-                        <a class="btn btn-primary btn-sm" href="{{ route('about.list') }}"><i class="fa fa-arrow-left"></i> Back</a>
+                        <a class="btn btn-warning btn-sm" href="{{ route('team.list') }}"><i class="fa fa-arrow-left"></i> Back</a>
 
                         <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
                             <i class="fas fa-minus"></i>
@@ -44,10 +44,10 @@
                         @php
                             $lastLetter = '';
                         @endphp
-                        @if($lastLetter != $about->description)
+                        @if($lastLetter != $team->description)
                             <div class="text-justify p-4">
                                 @php
-                                    $lastLetter = $about->description;
+                                    $lastLetter = $team->description;
                                  echo  $lastLetter;
                                 @endphp
                             </div>
@@ -56,7 +56,7 @@
                 </div>
                 <div class="col-xs-12 col-sm-12 col-md-12">
                     <div class="form-group">
-                        <img src="{{ asset($about->image) }}" class="img-fluid">
+                        <img src="{{ asset($team->image) }}" class="img-fluid">
                     </div>
                 </div>
             </div>
@@ -64,7 +64,7 @@
                 <!-- /.card-body -->
                 <div class="card-footer">
                     <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                        <a class="btn btn-primary btn-sm" href="{{ route('about.list') }}"><i class="fa fa-arrow-left"></i> Back</a>
+                        <a class="btn btn-warning btn-sm" href="{{ route('team.list') }}"><i class="fa fa-arrow-left"></i> Back</a>
                     </div>
                 </div>
     </div>

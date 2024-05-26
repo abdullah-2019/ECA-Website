@@ -107,7 +107,7 @@ class AboutController extends Controller
         About::where('id', $id)->delete();
 
         return redirect()->route('about.list')
-            ->with('success', 'Product deleted successfully');
+            ->with('success', 'Data deleted successfully');
     }
     public function search(Request $request) :View
     {

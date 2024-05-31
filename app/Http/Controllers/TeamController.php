@@ -43,10 +43,10 @@ class TeamController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'title' => 'required',
-            'position' => 'required',
-            'social_links' => 'required',
-            'description' => 'required',
+            'title' => 'required|string|max:255',
+            'position' => 'required|string|max:255',
+            'social_links' => 'required|string|max:255',
+            'description' => 'required|string',
             'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
         $imageName = time().'.'.$request->image->extension();
@@ -85,10 +85,10 @@ class TeamController extends Controller
     public function update(Request $request, Team $team): RedirectResponse
     {
         $request->validate([
-            'title' => 'required',
-            'position' => 'required',
-            'social_links' => 'required',
-            'description' => 'required'
+            'title' => 'required|string|max:255',
+            'position' => 'required|string|max:255',
+            'social_links' => 'required|string|max:255',
+            'description' => 'required|string'
         ]);
 
         $input = $request->all();

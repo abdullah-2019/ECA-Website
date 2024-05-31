@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use App\Http\Requests\LoginRequest;
 use Illuminate\Support\Facades\Auth;
@@ -13,6 +14,8 @@ class LoginController extends Controller
      *
      * @return Renderable
      */
+
+    protected $redirectTo = '/home';
 
     public function show()
     {

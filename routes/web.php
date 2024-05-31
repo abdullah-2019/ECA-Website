@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\AboutController;
+use App\Http\Controllers\ContactUsController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\LogoutController;
@@ -16,8 +18,7 @@ Route::get('/', function () {
 Route::get('home',
     [\App\Http\Controllers\HomeController::class, 'wellcome'])
     ->name('home');
-Route::resource('/contactus', App\Http\Controllers\ContactUsController::class);
-
+Route::get('/contactus',  [ContactUsController::class, 'index'])->name('contactus.index');
 Route::get('/sector', [SectorController::class, 'index'])->name('sector.index');
 Route::get('/about', [AboutController::class, 'index'])->name('about.index');
 
@@ -36,6 +37,13 @@ Route::group(['namespace' => 'App\Http\Controllers'], function()
      * Home Routes
      */
     Route::get('/', [HomeController::class, 'index'])->name('home.index');
+
+    Route::post('/contactus/store',  [ContactUsController::class, 'store'])->name('contactus.store');
+
+    Route::get('/contacts', [ContactUsController::class, 'list'])->name('contact.list');
+    Route::delete('contactDelete/{id}', [ContactUsController::class, 'destroy'])->name('contacts.destroy');
+    Route::get('/contacts/search', [ContactUsController::class,'search'])->name('contacts.search');
+
 
     Route::group(['middleware' => ['guest']], function() {
         /**
@@ -89,6 +97,20 @@ Route::group(['namespace' => 'App\Http\Controllers'], function()
         Route::delete('/services/destroy/{id}', [ServicesController::class, 'destroy'])->name('services.destroy');
         Route::get('/services/search', [ServicesController::class,'search'])->name('services.search');
 
+        Route::get('/home/create', [HomeController::class, 'create'])->name('home.create');
+        Route::post('/home/store',[HomeController::class, 'store'])->name('home.store');
+        Route::get('/home/list', [HomeController::class, 'list'])->name('home.list');
+        Route::get('/home/lists/{id}', [HomeController::class, 'lists'])->name('home.lists');
+        Route::get('/home/edit/{id}', [HomeController::class, 'edit'])->name('home.edit');
+        Route::get('/home/show/{id}', [HomeController::class, 'show'])->name('home.show');
+        Route::put('/home/update/{id}', [HomeController::class, 'update'])->name('home.update');
+        Route::delete('/home/destroy/{id}', [HomeController::class, 'destroy'])->name('home.destroy');
+        Route::get('/home/search', [HomeController::class,'search'])->name('home.search');
+
+        Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
         Route::get('/logout', [LogoutController::class, 'perform'])->name('logout.perform');
     });
+
+
 });

@@ -44,8 +44,8 @@ class SectorController extends Controller
     {
 
         $request->validate([
-            'title' => 'required',
-            'description' => 'required',
+            'title' => 'required|string|max:255',
+            'description' => 'required|string',
             'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
         $imageName = time().'.'.$request->image->extension();
@@ -82,8 +82,8 @@ class SectorController extends Controller
     public function update(Request $request, Sector $sector): RedirectResponse
     {
         $request->validate([
-            'title' => 'required',
-            'description' => 'required'
+            'title' => 'required|string|max:255',
+            'description' => 'required|string'
         ]);
 
         $input = $request->all();

@@ -12,6 +12,9 @@
     <!-- Theme style -->
     <link rel="stylesheet" href="{{ asset('../site-assets/dist/css/adminlte.min.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <link  href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css" rel="stylesheet">
+    <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+
 </head>
 <body class="hold-transition sidebar-mini">
 @auth

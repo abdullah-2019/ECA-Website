@@ -51,28 +51,48 @@
                 </div>
 
                 <div class="col-lg-6">
-                    <form action="forms/contact.php" method="post" role="form" class="php-email-form">
+                    <form  action="{{ route('contactus.store') }}" method="POST"   class="php-email-form">
+                       @csrf
                         <div class="row">
                             <div class="col-md-6 form-group">
-                                <input type="text" name="name" class="form-control" id="name"
+                                <input type="text" name="name" class="form-control @error('name') is-invalid @enderror" id="name"
                                     placeholder="Your Name" required>
+                                @error('name')
+                                <div class="form-text text-danger">{{ $message }}</div>
+                                @enderror
                             </div>
                             <div class="col-md-6 form-group mt-3 mt-md-0">
-                                <input type="email" class="form-control" name="email" id="email"
+                                <input type="email" class="form-control @error('email') is-invalid @enderror" name="email" id="email"
                                     placeholder="Your Email" required>
+                                @error('email')
+                                <div class="form-text text-danger">{{ $message }}</div>
+                                @enderror
                             </div>
                         </div>
                         <div class="form-group mt-3">
-                            <input type="text" class="form-control" name="subject" id="subject" placeholder="Subject"
+                            <input type="text" class="form-control @error('subject') is-invalid @enderror" name="subject" id="subject" placeholder="Subject"
                                 required>
+                            @error('subject')
+                            <div class="form-text text-danger">{{ $message }}</div>
+                            @enderror
                         </div>
                         <div class="form-group mt-3">
-                            <textarea class="form-control" name="message" rows="6" placeholder="Message" required></textarea>
+                            <textarea class="form-control @error('message') is-invalid @enderror" name="message" rows="6" placeholder="Message" required></textarea>
+                            @error('message')
+                            <div class="form-text text-danger">{{ $message }}</div>
+                            @enderror
                         </div>
                         <div class="my-3">
-                            <div class="loading">Loading</div>
-                            <div class="error-message"></div>
-                            <div class="sent-message">Your message has been sent. Thank you!</div>
+
+                                @session('success')
+                                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                    <i class="fa fa-ticket"></i> &nbsp; &nbsp; &nbsp; &nbsp;{{ $value }}
+                                    <button type="button" class="btn btn-tool" data-card-widget="remove">
+                                        <i class="fas fa-times"></i>
+                                    </button>
+                                </div>
+                                @endsession
+
                         </div>
                         <div class="text-center"><button type="submit">Send Message</button></div>
                     </form>

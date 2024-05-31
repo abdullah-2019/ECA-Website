@@ -18,14 +18,14 @@ class ServicesController extends Controller
     {
         //
     }
-public function list(): View
-{
-    $categories =  Categories::all();
-$services = Services::latest()->paginate(3);
-return view('pages.services.list',compact('services','categories'))
-->with('i', (request()->input('page', 1) - 1) * 5);
+    public function list(): View
+    {
+        $categories =  Categories::all();
+    $services = Services::latest()->paginate(3);
+    return view('pages.services.list',compact('services','categories'))
+    ->with('i', (request()->input('page', 1) - 1) * 5);
 
-}
+    }
     public function lists($id): View
     {
         $categories =  Categories::all();

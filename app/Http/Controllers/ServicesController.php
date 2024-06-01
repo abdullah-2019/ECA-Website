@@ -54,10 +54,13 @@ class ServicesController extends Controller
             'category_id' => 'required',
             'title' => 'required',
             'description' => 'required',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'image' => 'image|mimes:jpeg,png,jpg,webp,gif|max:2048',
         ]);
-        $imageName = time().'.'.$request->image->extension();
-        $request->image->move(public_path('images'), $imageName);
+        $imageName ="";
+        if (!empty($request->image)) {
+            $imageName = time() . '.' . $request->image->extension();
+            $request->image->move(public_path('images'), $imageName);
+        }
         $services = new Services();
         $services->category_id = $request->category_id;
         $services->title = $request->title;
@@ -88,7 +91,7 @@ class ServicesController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Services $services): RedirectResponse
+    public function update(Request $request,$id): RedirectResponse
     {
         $request->validate([
             'category_id' => 'required',
@@ -98,16 +101,23 @@ class ServicesController extends Controller
 
         $input = $request->all();
 
-        if ($image = $request->file('image')) {
+        if (!empty($input['image'])) {
+            $image = $request->file('image');
             $Images = time().'.'. $image->extension();
             $image->move(public_path('images'), $Images);
-            $input['image'] = 'images/'.$Images;
+            $input['image'] = "images/".$Images;
+
         }else{
             unset($input['image']);
         }
 
-        $services->update($input);
+        $services = Services::find($id);
+        $services->category_id = $request->category_id;
+        $services->title = $request->title;
+        $services->description = $request->description;
+        $services->image = $input['image'];
 
+        $services->save();
         return redirect()->route('services.list')
             ->with('success', 'Data updated successfully');
         //

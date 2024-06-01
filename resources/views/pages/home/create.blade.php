@@ -78,13 +78,12 @@
                                         <input type="file" name="image" class="custom-file-input @error('image') is-invalid @enderror"
                                                id="inputImage">
                                         <label class="custom-file-label" for="exampleInputFile">Choose file</label>
-                                        @error('image')
-                                        <div class="form-text text-danger">{{ $message }}</div>
-                                        @enderror
-
                                     </div>
 
                                 </div>
+                                @error('image')
+                                <div class="form-text text-danger">{{ $message }}</div>
+                                @enderror
                             </div>
                         <div class="form-group">
                             <label for="exampleInputEmail1">Description</label>

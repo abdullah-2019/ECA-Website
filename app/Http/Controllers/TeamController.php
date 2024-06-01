@@ -45,12 +45,15 @@ class TeamController extends Controller
         $request->validate([
             'title' => 'required|string|max:255',
             'position' => 'required|string|max:255',
-            'social_links' => 'required|string|max:255',
+            'social_links' => 'required|string|max:5000',
             'description' => 'required|string',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'image' => 'required|image|mimes:jpeg,svg,webp,png,jpg,gif|max:2048',
         ]);
-        $imageName = time().'.'.$request->image->extension();
-        $request->image->move(public_path('images'), $imageName);
+        $imageName ="";
+        if (!empty($request->image)) {
+            $imageName = time() . '.' . $request->image->extension();
+            $request->image->move(public_path('images'), $imageName);
+        }
         $team = new Team();
         $team->title = $request->title;
         $team->position = $request->position;
@@ -82,26 +85,34 @@ class TeamController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Team $team): RedirectResponse
+    public function update(Request $request, $id): RedirectResponse
     {
         $request->validate([
             'title' => 'required|string|max:255',
             'position' => 'required|string|max:255',
-            'social_links' => 'required|string|max:255',
+            'social_links' => 'required|string|max:5000',
             'description' => 'required|string'
         ]);
 
         $input = $request->all();
-
-        if ($image = $request->file('image')) {
+        if (!empty($input['image'])) {
+            $image = $request->file('image');
             $Images = time().'.'. $image->extension();
             $image->move(public_path('images'), $Images);
-            $input['image'] = 'images/'.$Images;
+            $input['image'] = "images/".$Images;
+
         }else{
             unset($input['image']);
         }
 
-        $team->update($input);
+        $team = Team::find($id);
+
+        $team->title = $request->title;
+        $team->position = $request->position;
+        $team->social_links = $request->social_links;
+        $team->description = $request->description;
+        $team->image = $input['image'];
+        $team->save();
 
         return redirect()->route('team.list')
             ->with('success', 'Data updated successfully');

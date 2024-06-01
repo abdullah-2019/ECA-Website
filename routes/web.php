@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AboutController;
+use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\ContactUsController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HomeController;
@@ -68,7 +69,8 @@ Route::group(['namespace' => 'App\Http\Controllers'], function()
         Route::delete('/about/destroy/{id}', [AboutController::class, 'destroy'])->name('about.destroy');
         Route::get('/about/search', [AboutController::class,'search'])->name('about.search');
 
-
+        Route::get('/login/home', [HomeController::class, 'index'])->name('auth.login');
+        Route::get('/dashboards', [HomeController::class, 'wellcome'])->name('login');
         Route::get('/sector/create', [SectorController::class, 'create'])->name('sector.create');
         Route::post('/sector/store',[SectorController::class, 'store'])->name('sector.store');
         Route::get('/sector/list', [SectorController::class, 'list'])->name('sector.list');
@@ -108,6 +110,12 @@ Route::group(['namespace' => 'App\Http\Controllers'], function()
         Route::get('/home/search', [HomeController::class,'search'])->name('home.search');
 
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+        Route::delete('/categories/destroy', [CategoriesController::class, 'destroy'])->name('categories.destroy');
+        Route::get('/categories/create', [CategoriesController::class, 'create'])->name('categories.create');
+        Route::post('/categories/store', [CategoriesController::class, 'store'])->name('categories.store');
+        Route::get('/categories', function () {
+            return view('pages.dashboard.index');
+        })->name('categories');
 
         Route::get('/logout', [LogoutController::class, 'perform'])->name('logout.perform');
     });

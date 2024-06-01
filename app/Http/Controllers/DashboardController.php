@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\About;
+use App\Models\Categories;
 use App\Models\ContactUs;
 use App\Models\Home;
 use App\Models\Sector;
@@ -73,8 +74,12 @@ class DashboardController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy($id)
     {
         //
+        Categories::where('id',$id)->delete();
+
+        return redirect()->route('categories')
+            ->with('success', 'Data deleted successfully');
     }
 }

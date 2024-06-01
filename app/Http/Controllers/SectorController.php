@@ -16,6 +16,7 @@ class SectorController extends Controller
      */
     public function index()
     {
+
         return view('site.pages.sectors.index');
     }
 
@@ -34,7 +35,8 @@ class SectorController extends Controller
      */
     public function create()
     {
-        return view('pages.sectors.create');
+        $sectorcategories =   ['Part 1','Part 2','Part 3'];
+        return view('pages.sectors.create',compact('sectorcategories'));
     }
 
     /**
@@ -44,12 +46,16 @@ class SectorController extends Controller
     {
 
         $request->validate([
+            'category_id' => 'required',
             'title' => 'required|string|max:255',
             'description' => 'required|string',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'image' => 'image|mimes:jpeg,svg,png,jpg,gif|max:2048',
         ]);
-        $imageName = time().'.'.$request->image->extension();
-        $request->image->move(public_path('images'), $imageName);
+        $imageName ="";
+        if (!empty($request->image)) {
+            $imageName = time() . '.' . $request->image->extension();
+            $request->image->move(public_path('images'), $imageName);
+        }
         $sector = new Sector();
         $sector->title = $request->title;
         $sector->description = $request->description;
@@ -72,31 +78,38 @@ class SectorController extends Controller
      */
     public function edit($id): View
     {
+        $sectorcategories =   ['Part 1','Part 2','Part 3'];
         $sector=Sector::where('id',$id)->first();
-        return view('pages.sectors.edit', compact('sector'));
+        return view('pages.sectors.edit', compact('sector','sectorcategories'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Sector $sector): RedirectResponse
+    public function update(Request $request, $id): RedirectResponse
     {
         $request->validate([
+            'category_id' => 'required',
             'title' => 'required|string|max:255',
             'description' => 'required|string'
         ]);
 
         $input = $request->all();
-
-        if ($image = $request->file('image')) {
+        if (!empty($input['image'])) {
+            $image = $request->file('image');
             $Images = time().'.'. $image->extension();
             $image->move(public_path('images'), $Images);
-            $input['image'] = 'images/'.$Images;
+            $input['image'] = "images/".$Images;
+
         }else{
             unset($input['image']);
         }
-
-        $sector->update($input);
+        $sector = Sector::find($id);
+        $sector->category_id = $request->category_id;
+        $sector->title = $request->title;
+        $sector->description = $request->description;
+        $sector->image = $input['image'];
+        $sector->save();
 
         return redirect()->route('sector.list')
             ->with('success', 'Data updated successfully');

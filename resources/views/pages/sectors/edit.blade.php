@@ -48,6 +48,20 @@
                             @csrf
                             @method('PUT')
                             <div class="form-group">
+                                <label for="exampleSelectRounded0">Category</label>
+                                <select class="custom-select rounded-0" id="category" name="category_id">
+                                    <option value="">Select Category</option>
+                                    @forelse($sectorcategories as $category)
+                                        <option value="{{ $category }}">{{ $category  }}</option>
+                                    @empty
+                                        <option value="">Select Category</option>
+                                    @endforelse
+                                </select>
+                                @error('category_id')
+                                <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="form-group">
                                 <label for="exampleInputEmail1">Title</label>
                                 <input type="text" name="title" value="{{ $sector->title }}" class="form-control @error('title') is-invalid @enderror"
                                        id="inputName"
@@ -66,13 +80,14 @@
                                         <input type="file" name="image" class="custom-file-input @error('image') is-invalid @enderror"
                                                id="inputImage">
                                         <label class="custom-file-label" for="exampleInputFile">Choose file</label>
-                                         @error('image')
-                                        <div class="form-text text-danger">{{ $message }}</div>
-                                        @enderror
 
                                     </div>
 
                                 </div>
+                                @error('image')
+                                <div class="form-text text-danger">{{ $message }}</div>
+                                @enderror
+
                                 <img src="{{ asset($sector->image) }}" width="300px">
 
                             </div>

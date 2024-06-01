@@ -38,7 +38,7 @@ class HomeController extends Controller
     }
     public function lists($id): View
     {
-        $homecategories =   ['Slider','services','what we have done'];;
+        $homecategories =   ['Slider','services','what we have done'];
         $homes = Home::where('category_id',$id)->paginate(3);
         return view('pages.home.list',compact('homes','homecategories'))
             ->with('i', (request()->input('page', 1) - 1) * 5);
@@ -64,10 +64,13 @@ class HomeController extends Controller
             'category_id' => 'required',
             'title' => 'required|string|max:255',
             'description' => 'required|string',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'image' => 'image|mimes:jpeg,png,webp,jpg,gif|max:2048',
         ]);
-        $imageName = time().'.'.$request->image->extension();
-        $request->image->move(public_path('images'), $imageName);
+        $imageName ="";
+        if (!empty($request->image)) {
+            $imageName = time() . '.' . $request->image->extension();
+            $request->image->move(public_path('images'), $imageName);
+        }
         $home = new Home();
         $home->category_id = $request->category_id;
         $home->title = $request->title;
@@ -99,7 +102,7 @@ class HomeController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Home $home): RedirectResponse
+    public function update(Request $request, $id): RedirectResponse
     {
         $request->validate([
             'category_id' => 'required',
@@ -109,16 +112,22 @@ class HomeController extends Controller
 
         $input = $request->all();
 
-        if ($image = $request->file('image')) {
+        if (!empty($input['image'])) {
+            $image = $request->file('image');
             $Images = time().'.'. $image->extension();
             $image->move(public_path('images'), $Images);
-            $input['image'] = 'images/'.$Images;
+            $input['image'] = "images/".$Images;
+
         }else{
             unset($input['image']);
         }
 
-        $home->update($input);
-
+        $home = Home::find($id);
+        $home->category_id = $request->category_id;
+        $home->title = $request->title;
+        $home->description = $request->description;
+        $home->image = $input['image'];
+        $home->save();
         return redirect()->route('home.list')
             ->with('success', 'Data updated successfully');
         //

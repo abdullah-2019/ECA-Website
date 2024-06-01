@@ -123,7 +123,24 @@
                             </p>
                         </a>
                     </li>
-
+                    <li class="nav-item menu-open">
+                        <a href="{{ route('categories') }}" class="nav-link active">
+                            <i class="nav-icon fas fa-book"></i>
+                            <p>
+                                Categories
+                                <i class="fas fa-angle-left right"></i>
+                            </p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ route('logout.perform') }}" class="nav-link">
+                            <i class="nav-icon far fa-plus-square"></i>
+                            <p>
+                                Logout
+                                <i class="fas fa-angle-left right"></i>
+                            </p>
+                        </a>
+                    </li>
                 </ul>
             </nav>
             <!-- /.sidebar-menu -->

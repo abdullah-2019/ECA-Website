@@ -27,6 +27,7 @@ class CategoriesController extends Controller
     public function create()
     {
         //
+        return view('pages.dashboard.create');
     }
 
     /**
@@ -35,6 +36,14 @@ class CategoriesController extends Controller
     public function store(Request $request)
     {
         //
+        $request->validate([
+            'category' => 'required|string|max:255',
+        ]);
+        $categories = new Categories();
+        $categories->category = $request->category;
+        $categories->save();
+        return redirect()->route('categories')->with('success', 'Your Message has been succesfully submited.');
+
     }
 
     /**

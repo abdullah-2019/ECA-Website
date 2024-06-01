@@ -40,12 +40,15 @@ class AboutController extends Controller
     {
 
         $request->validate([
-            'title' => 'required,string,max:255',
-            'description' => 'required,string',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'title' => 'required|string|max:255',
+            'description' => 'required|string',
+            'image' => 'image|mimes:jpeg,webp,svg,png,jpg,gif|max:2048',
         ]);
-        $imageName = time().'.'.$request->image->extension();
-        $request->image->move(public_path('images'), $imageName);
+        $imageName ="";
+        if (!empty($request->image)) {
+            $imageName = time() . '.' . $request->image->extension();
+            $request->image->move(public_path('images'), $imageName);
+        }
         $about = new About();
         $about->title = $request->title;
         $about->description = $request->description;
@@ -75,24 +78,29 @@ class AboutController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, About $about): RedirectResponse
+    public function update(Request $request, $id): RedirectResponse
     {
         $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'required|string'
         ]);
-
         $input = $request->all();
-
-        if ($image = $request->file('image')) {
+        if (!empty($input['image'])) {
+            $image = $request->file('image');
             $Images = time().'.'. $image->extension();
             $image->move(public_path('images'), $Images);
-            $input['image'] = 'images/'.$Images;
+            $input['image'] = "images/".$Images;
+
         }else{
-             unset($input['image']);
+            unset($input['image']);
         }
 
-        $about->update($input);
+        $about = About::find($id);
+
+        $about->title = $request->title;
+        $about->description = $request->description;
+        $about->image = $input['image'];
+        $about->save();
 
         return redirect()->route('about.list')
             ->with('success', 'Data updated successfully');

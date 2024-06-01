@@ -1,7 +1,15 @@
 @extends('layouts.auth-master')
 
 @section('content')
-    <form method="post" action="{{ route('register.perform') }}">
+    <div class="register-box">
+        <div class="card card-outline card-primary">
+            <div class="card-header text-center">
+                <a href="../../index2.html" class="h1"><b>Admin</b>LTE</a>
+            </div>
+            <div class="card-body">
+                <p class="login-box-msg">Register a new membership</p>
+
+                <form method="post" action="{{ route('register.perform') }}">
 
         <input type="hidden" name="_token" value="{{ csrf_token() }}" />
         <img class="mb-4" src="{!! url('images/bootstrap-logo.svg') !!}" alt="" width="72" height="57">
@@ -44,4 +52,8 @@
 
         @include('auth.partials.copy')
     </form>
+            </div>
+            <!-- /.form-box -->
+        </div><!-- /.card -->
+    </div>
 @endsection

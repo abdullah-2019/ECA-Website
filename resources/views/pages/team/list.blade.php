@@ -75,7 +75,7 @@
                             <img src="{{ asset($team->image) }}" class="img-fluid" style="max-height: 200px; min-width: 300px;">
                         </div>
                         <div class="row"> <div class="text-justify p-4">{{ $team->position }}<br>
-                       {{ $team->social_links }}</div></div>
+                                @php echo $team->social_links @endphp</div></div>
                         <div class="row " style="margin-top: -30px">
                             @php
                                  $lastLetter = '';

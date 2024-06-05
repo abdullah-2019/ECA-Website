@@ -6,6 +6,7 @@ use App\Models\Categories;
 use App\Models\Services;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
 use Illuminate\Database\Eloquent\Builder;
 
@@ -98,7 +99,7 @@ class ServicesController extends Controller
             'title' => 'required',
             'description' => 'required'
         ]);
-
+        $services = Services::find($id);
         $input = $request->all();
 
         if (!empty($input['image'])) {
@@ -106,17 +107,13 @@ class ServicesController extends Controller
             $Images = time().'.'. $image->extension();
             $image->move(public_path('images'), $Images);
             $input['image'] = "images/".$Images;
-
+            $services->image = $input['image'];
         }else{
             unset($input['image']);
         }
-
-        $services = Services::find($id);
         $services->category_id = $request->category_id;
         $services->title = $request->title;
         $services->description = $request->description;
-        $services->image = $input['image'];
-
         $services->save();
         return redirect()->route('services.list')
             ->with('success', 'Data updated successfully');
@@ -134,7 +131,6 @@ class ServicesController extends Controller
     }
     public function search(Request $request) :View
     {
-
         $services = Services::query()
             ->when(
                 $request->search,
@@ -172,7 +168,8 @@ class ServicesController extends Controller
 
     public function payroll()
     {
-        return view('site.pages.services.payroll');
+        $services = DB::table('services')->where('category_id', '=', 6)->get();
+        return view('site.pages.services.payroll' ,compact('services'));
     }
 
     public function cashDistribution()

@@ -95,20 +95,19 @@ class SectorController extends Controller
         ]);
 
         $input = $request->all();
+        $sector = Sector::find($id);
         if (!empty($input['image'])) {
             $image = $request->file('image');
             $Images = time().'.'. $image->extension();
             $image->move(public_path('images'), $Images);
             $input['image'] = "images/".$Images;
-
+            $sector->image = $input['image'];
         }else{
             unset($input['image']);
         }
-        $sector = Sector::find($id);
         $sector->category_id = $request->category_id;
         $sector->title = $request->title;
         $sector->description = $request->description;
-        $sector->image = $input['image'];
         $sector->save();
 
         return redirect()->route('sector.list')

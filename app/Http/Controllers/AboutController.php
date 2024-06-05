@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
 
 class AboutController extends Controller
@@ -16,7 +17,9 @@ class AboutController extends Controller
      */
     public function index()
     {
-        return view('site.pages.about.index');
+        $abouts=DB::table('abouts')->where('title', '!=', 'Privacy Policy')->get();
+        $privacy=DB::table('abouts')->where('title', '=', 'Privacy Policy')->get();
+        return view('site.pages.about.index',compact('abouts','privacy'));
     }
     public function list(): View
     {
@@ -85,21 +88,19 @@ class AboutController extends Controller
             'description' => 'required|string'
         ]);
         $input = $request->all();
+        $about = About::find($id);
         if (!empty($input['image'])) {
             $image = $request->file('image');
             $Images = time().'.'. $image->extension();
             $image->move(public_path('images'), $Images);
             $input['image'] = "images/".$Images;
-
+            $about->image = $input['image'];
         }else{
             unset($input['image']);
         }
-
-        $about = About::find($id);
-
         $about->title = $request->title;
         $about->description = $request->description;
-        $about->image = $input['image'];
+
         $about->save();
 
         return redirect()->route('about.list')

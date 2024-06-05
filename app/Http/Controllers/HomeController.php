@@ -8,6 +8,7 @@ use App\Models\Services;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use Illuminate\View\View;
 use JulioMotol\AuthTimeout\AuthTimeout;
@@ -109,24 +110,20 @@ class HomeController extends Controller
             'title' => 'required|string|max:255',
             'description' => 'required|string'
         ]);
-
         $input = $request->all();
-
+        $home = Home::find($id);
         if (!empty($input['image'])) {
             $image = $request->file('image');
             $Images = time().'.'. $image->extension();
             $image->move(public_path('images'), $Images);
             $input['image'] = "images/".$Images;
-
+            $home->image = $input['image'];
         }else{
             unset($input['image']);
         }
-
-        $home = Home::find($id);
         $home->category_id = $request->category_id;
         $home->title = $request->title;
         $home->description = $request->description;
-        $home->image = $input['image'];
         $home->save();
         return redirect()->route('home.list')
             ->with('success', 'Data updated successfully');
@@ -144,7 +141,6 @@ class HomeController extends Controller
     }
     public function search(Request $request) :View
     {
-
         $homes = Home::query()
             ->when(
                 $request->search,
@@ -158,6 +154,10 @@ class HomeController extends Controller
     }
     public function wellcome()
     {
-        return view('welcome');
+        $services=DB::table('home')->where('category_id', 'like', 'services')->get();
+        $whatwedo=DB::table('home')->where('category_id', 'like', 'what we have done')->get();
+        $abouts=DB::table('abouts')->where('title', '!=', 'Privacy Policy')->get();
+        return view('welcome', compact('services','abouts','whatwedo'));
     }
+
 }

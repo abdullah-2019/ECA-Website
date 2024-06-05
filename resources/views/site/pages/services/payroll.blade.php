@@ -15,8 +15,17 @@
         </div>
     </section>
 
+        <div class="col-md-6 col-lg-3 d-flex align-items-stretch" data-aos="fade-up">
+
+
+
+
+        </div>
+
     <section class="about" data-aos="fade-up">
         <div class="container">
+
+            @foreach($services as $service)
             <div class="row">
                 <div class="col-lg-6">
                     <img src="{{ asset('site-assets/img/payroll.png') }}" class="img-fluid" alt="payroll-services"
@@ -25,14 +34,13 @@
                 <div class="col-lg-6 pt-4 pt-lg-0">
                     <h3>Payroll Processing</h3>
                     <p>
-                        ECA simplifies payroll management by offering efficient and accurate payroll processing services.
-                        Our streamlined systems ensure timely and error-free salary disbursement while adhering to
-                        regulatory requirements.independence.
+                        @php echo $service->description @endphp
                     </p>
+
                 </div>
                 <br>
             </div>
-
+            @endforeach
         </div>
     </section>
 @endsection

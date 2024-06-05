@@ -16,15 +16,13 @@ use App\Http\Controllers\ServicesController;
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get('home',
-    [\App\Http\Controllers\HomeController::class, 'wellcome'])
-    ->name('home');
+Route::get('home', [HomeController::class, 'wellcome'])->name('home');
 Route::get('/contactus',  [ContactUsController::class, 'index'])->name('contactus.index');
 Route::get('/sector', [SectorController::class, 'index'])->name('sector.index');
 Route::get('/about', [AboutController::class, 'index'])->name('about.index');
 
 Route::get('/team', [TeamController::class, 'index'])->name('team.index');
-
+Route::get('/home/services', [HomeController::class, 'services'])->name('home.services');
 Route::get('/services/audit', [ServicesController::class, 'audit'])->name('services.audit');
 Route::get('/services/tax', [ServicesController::class, 'tax'])->name('services.tax');
 Route::get('/services/legal', [ServicesController::class, 'legal'])->name('services.legal');
@@ -69,8 +67,6 @@ Route::group(['namespace' => 'App\Http\Controllers'], function()
         Route::delete('/about/destroy/{id}', [AboutController::class, 'destroy'])->name('about.destroy');
         Route::get('/about/search', [AboutController::class,'search'])->name('about.search');
 
-        Route::get('/login/home', [HomeController::class, 'index'])->name('auth.login');
-        Route::get('/dashboards', [HomeController::class, 'wellcome'])->name('login');
         Route::get('/sector/create', [SectorController::class, 'create'])->name('sector.create');
         Route::post('/sector/store',[SectorController::class, 'store'])->name('sector.store');
         Route::get('/sector/list', [SectorController::class, 'list'])->name('sector.list');
@@ -109,7 +105,10 @@ Route::group(['namespace' => 'App\Http\Controllers'], function()
         Route::delete('/home/destroy/{id}', [HomeController::class, 'destroy'])->name('home.destroy');
         Route::get('/home/search', [HomeController::class,'search'])->name('home.search');
 
-        Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+        Route::get('/login/home', [HomeController::class, 'index'])->name('auth.login');
+        Route::get('/dashboards', [HomeController::class, 'wellcome'])->name('dashboard');
+
+         Route::get('/dashboard', [DashboardController::class, 'index'])->name('login');
         Route::delete('/categories/destroy', [CategoriesController::class, 'destroy'])->name('categories.destroy');
         Route::get('/categories/create', [CategoriesController::class, 'create'])->name('categories.create');
         Route::post('/categories/store', [CategoriesController::class, 'store'])->name('categories.store');

@@ -7,6 +7,7 @@ use App\Models\Team;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
 
 class TeamController extends Controller
@@ -16,7 +17,8 @@ class TeamController extends Controller
      */
     public function index()
     {
-        return view('site.pages.team.index');
+        $teams=DB::table('teams')->get();
+        return view('site.pages.team.index',compact('teams'));
     }
 
     /**
@@ -95,23 +97,20 @@ class TeamController extends Controller
         ]);
 
         $input = $request->all();
+        $team = Team::find($id);
         if (!empty($input['image'])) {
             $image = $request->file('image');
             $Images = time().'.'. $image->extension();
             $image->move(public_path('images'), $Images);
             $input['image'] = "images/".$Images;
-
+            $team->image = $input['image'];
         }else{
             unset($input['image']);
         }
-
-        $team = Team::find($id);
-
         $team->title = $request->title;
         $team->position = $request->position;
         $team->social_links = $request->social_links;
         $team->description = $request->description;
-        $team->image = $input['image'];
         $team->save();
 
         return redirect()->route('team.list')

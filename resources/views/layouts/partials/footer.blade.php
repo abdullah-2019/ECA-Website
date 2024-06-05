@@ -4,7 +4,7 @@
     <div class="float-right d-none d-sm-block">
 
     </div>
-    <strong>Copyright &copy; 2014-2021 <a href="https://adminlte.io">ECA</a>.</strong> All rights reserved.
+    <strong>Copyright &copy; {{ date('Y') }} <a href="https://adminlte.io">ECA</a>.</strong> All rights reserved.
 </footer>
 
 <!-- Control Sidebar -->

@@ -139,74 +139,39 @@
 
         </div>
     </section>
-
+@php $left="eca-timeline-left"; $right="eca-timeline-right"; @endphp
     <section>
         <div class="container">
+            @foreach($descriptions as $description)
             <p>
-                We provide meticulous Audit and Assurance Services, ensuring accurate and transparent financial records. Our
-                experienced auditors adhere to high standards, employing the latest audit methodologies and staying updated
-                on accounting practices. We offer tailored project audits for prominent donor agencies in Afghanistan and
-                conduct statutory audits for various organizations. Additionally, we perform Special Purpose Audits aligned
-                with ISA 805. Our services empower clients with comprehensive financial insights and uphold strict auditor
-                independence.
+               @php echo $description->description @endphp
             </p>
+            @endforeach
         </div>
         <div class="eca-timeline">
-            <div class="eca-container eca-timeline-left" data-aos="fade-up" data-aos-easing="ease-in-out"
+            @foreach($services as $service)
+                @if($service->id%2==0)
+            <div class="eca-container @php echo $left @endphp" data-aos="fade-up" data-aos-easing="ease-in-out"
                 data-aos-duration="1000">
                 <div class="content">
-                    <h2 class="eca-timeline-title">Elevating Standards, Ensuring Integrity</h2>
+                    <h2 class="eca-timeline-title">{{ $service->title }}</h2>
                     <p class="eca-timeline-p">
-                        Our seasoned auditors meticulously examine financial records, ensuring accuracy, compliance, and
-                        transparency. Our rigorous auditing processes provide clients with a comprehensive understanding of
-                        their financial health and enable them to make informed decisions. We adhere to the highest
-                        standards of quality by employing the latest Eagle General Audit Methodology (EGAM) in conducting
-                        audits, ensuring alignment with ECA standards. We bolster our audit teams with a cadre of
-                        specialists who stay abreast of both domestic and international accounting and auditing practices.
-                        This proactive approach enables us to swiftly adapt to changes in accounting systems and laws.
-                        Moreover, to augment the effectiveness of our audit services, we have established a robust audit
-                        opinion review system overseen by independent review committees separate from the audit teams. This
-                        synergy of seasoned professionals, coupled with the utilization of contemporary, tailored
-                        knowledge-sharing systems, plays a pivotal role in upholding ECA's commitment to strict auditor
-                        independence.
+                        @php echo $service->description @endphp
                     </p>
                 </div>
             </div>
-            <div class="eca-container eca-timeline-right" data-aos="fade-up" data-aos-easing="ease-in-out"
-                data-aos-duration="1000">
-                <div class="content">
-                    <h2 class="eca-timeline-title">Project Financial Statement Audit</h2>
-                    <p class="eca-timeline-p">
-                        We possess a comprehensive understanding of the criteria established by prominent donor agencies
-                        operating in Afghanistan, including UNDP, UN Women, UNOPS, UNOCHA, US Embassy, World Bank, and
-                        USAID. Our extensive expertise extends to the audit of funds associated with these agencies, and we
-                        provide project audit services tailored to meet the specific requirements and reporting guidelines
-                        stipulated by the donor agencies.
-                    </p>
-                </div>
-            </div>
-            <div class="eca-container eca-timeline-left" data-aos="fade-up" data-aos-easing="ease-in-out"
-                data-aos-duration="1000">
-                <div class="content">
-                    <h2 class="eca-timeline-title">Statutory Audit</h2>
-                    <p class="eca-timeline-p">
-                        We specialize in conducting statutory annual audits of financial statements for a diverse range of
-                        organizations, including non-governmental organizations (NGOs), public sector entities, and private
-                        sector businesses. Our services align with the requirements set forth by the Ministry of Economy and
-                        the Ministry of Commerce and Industry in Afghanistan.
-                    </p>
-                </div>
-            </div>
-            <div class="eca-container eca-timeline-right" data-aos="fade-up" data-aos-easing="ease-in-out"
-                data-aos-duration="1000">
-                <div class="content">
-                    <h2 class="eca-timeline-title">Special Purpose Audit</h2>
-                    <p class="eca-timeline-p">
-                        We extend our audit services to encompass specific elements or items within financial statements,
-                        meticulously aligned with the special purpose framework in accordance with ISA 805.hanistan.
-                    </p>
-                </div>
-            </div>
+                @else
+                    <div class="eca-container @php echo $right @endphp" data-aos="fade-up" data-aos-easing="ease-in-out"
+                         data-aos-duration="1000">
+                        <div class="content">
+                            <h2 class="eca-timeline-title">{{ $service->title }}</h2>
+                            <p class="eca-timeline-p">
+                                @php echo $service->description @endphp
+                            </p>
+                        </div>
+                    </div>
+                @endif
+            @endforeach
         </div>
     </section>
 @endsection

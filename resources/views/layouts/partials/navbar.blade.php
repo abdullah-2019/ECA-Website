@@ -40,7 +40,7 @@
                          with font-awesome or any other icon font library -->
 
                     <li class="nav-item">
-                        <a href="{{ route('login') }}" class="nav-link">
+                        <a href="{{ route('login') }}" class="nav-link active">
                             <i class="nav-icon fas fa-tachometer-alt"></i>
                             <p>
                                 Dashboard
@@ -90,7 +90,6 @@
                                         <p>Not Found</p>
                                     </a>
                                 </li>
-                                <option value="">Select Category</option>
                             @endforelse
 
 
@@ -124,7 +123,7 @@
                         </a>
                     </li>
                     <li class="nav-item menu-open">
-                        <a href="{{ route('categories') }}" class="nav-link active">
+                        <a href="{{ route('categories') }}" class="nav-link">
                             <i class="nav-icon fas fa-book"></i>
                             <p>
                                 Categories

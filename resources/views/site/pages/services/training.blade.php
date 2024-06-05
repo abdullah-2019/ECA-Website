@@ -17,21 +17,22 @@
 
     <section class="about" data-aos="fade-up">
         <div class="container">
-            <div class="row">
-                <div class="col-lg-6">
-                    <img src="{{ asset('site-assets/img/trainings.png') }}" class="img-fluid" alt="tax-services"
-                        loading="lazy">
+            @foreach($services as $service)
+                <div class="row">
+                    <div class="col-lg-6">
+                        <img src="{{ asset($service->image) }}" class="img-fluid" alt="payroll-services"
+                             loading="lazy">
+                    </div>
+                    <div class="col-lg-6 pt-4 pt-lg-0">
+                        <h3>{{ $service->title }}</h3>
+                        <p>
+                            @php echo $service->description @endphp
+                        </p>
+
+                    </div>
+                    <br>
                 </div>
-                <div class="col-lg-6 pt-4 pt-lg-0">
-                    <h3>Training and Capacity Development</h3>
-                    <p>
-                        Recognizing the importance of human capital, ECA offers tailored capacity-building programs designed
-                        to enhance the skills and knowledge of personnel within organizations. Our training initiatives
-                        contribute to improved financial management and decision-making.
-                    </p>
-                </div>
-                <br>
-            </div>
+            @endforeach
 
         </div>
     </section>

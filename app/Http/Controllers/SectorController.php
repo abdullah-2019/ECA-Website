@@ -7,6 +7,7 @@ use App\Models\Sector;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
 
 class SectorController extends Controller
@@ -16,8 +17,10 @@ class SectorController extends Controller
      */
     public function index()
     {
-
-        return view('site.pages.sectors.index');
+       $sectors= DB::table('sectors')->where('category_id', '=', 'Part 1')->get();
+        $sectorspoints= DB::table('sectors')->where('category_id', '=', 'Part 2')->get();
+        $sectorscards= DB::table('sectors')->where('category_id', '=', 'Part 3')->get();
+        return view('site.pages.sectors.index',compact('sectors','sectorspoints','sectorscards'));
     }
 
     /**
@@ -25,7 +28,7 @@ class SectorController extends Controller
      */
     public function list(): View
     {
-        $sectors = Sector::latest()->paginate(3);
+        $sectors = Sector::latest()->orderBy('id', 'desc')->paginate(3);
         return view('pages.sectors.list',compact('sectors'))
             ->with('i', (request()->input('page', 1) - 1) * 5);
 
@@ -57,6 +60,7 @@ class SectorController extends Controller
             $request->image->move(public_path('images'), $imageName);
         }
         $sector = new Sector();
+        $sector->category_id = $request->category_id;
         $sector->title = $request->title;
         $sector->description = $request->description;
         $sector->image = 'images/'.$imageName;

@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Models\Categories;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\View\View;
 use JulioMotol\AuthTimeout\Middlewares\CheckAuthTimeout;
@@ -26,6 +27,7 @@ class AppServiceProvider extends ServiceProvider
         $categories =  Categories::all();
         \Illuminate\Support\Facades\View::share(compact('categories'));
         CheckAuthTimeout::setRedirectTo(function ($request, $guard){
+            Session::regenerate();
             return match($guard){
                 'custom-guard' => route('home'),
                 default => route('auth.login')

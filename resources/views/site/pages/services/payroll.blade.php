@@ -26,20 +26,20 @@
         <div class="container">
 
             @foreach($services as $service)
-            <div class="row">
-                <div class="col-lg-6">
-                    <img src="{{ asset('site-assets/img/payroll.png') }}" class="img-fluid" alt="payroll-services"
-                        loading="lazy">
-                </div>
-                <div class="col-lg-6 pt-4 pt-lg-0">
-                    <h3>Payroll Processing</h3>
-                    <p>
-                        @php echo $service->description @endphp
-                    </p>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <img src="{{ asset($service->image) }}" class="img-fluid" alt="payroll-services"
+                             loading="lazy">
+                    </div>
+                    <div class="col-lg-6 pt-4 pt-lg-0">
+                        <h3>{{ $service->title }}</h3>
+                        <p>
+                            @php echo $service->description @endphp
+                        </p>
 
+                    </div>
+                    <br>
                 </div>
-                <br>
-            </div>
             @endforeach
         </div>
     </section>

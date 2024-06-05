@@ -23,7 +23,7 @@ class AboutController extends Controller
     }
     public function list(): View
     {
-        $abouts = About::latest()->paginate(3);
+        $abouts = About::latest()->orderBy('id', 'desc')->paginate(3);
         return view('pages.about.list',compact('abouts'))
             ->with('i', (request()->input('page', 1) - 1) * 5);
 

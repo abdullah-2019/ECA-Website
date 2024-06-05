@@ -26,7 +26,7 @@ class TeamController extends Controller
      */
     public function list(): View
     {
-        $teams = Team::latest()->paginate(3);
+        $teams = Team::latest()->orderBy('id', 'desc')->paginate(3);
         return view('pages.team.list',compact('teams'))
             ->with('i', (request()->input('page', 1) - 1) * 5);
 

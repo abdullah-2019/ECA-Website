@@ -28,7 +28,7 @@ class ContactUsController extends Controller
     }
     public function list()
     {
-        $contacts = ContactUs::latest()->paginate(10);
+        $contacts = ContactUs::latest()->orderBy('id', 'desc')->paginate(10);
 
         return view('pages.contact.index',compact('contacts'))
             ->with('i', (request()->input('page', 1) - 1) * 5);

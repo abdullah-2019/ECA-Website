@@ -22,7 +22,7 @@ class ServicesController extends Controller
     public function list(): View
     {
         $categories =  Categories::all();
-    $services = Services::latest()->paginate(3);
+    $services = Services::latest()->orderBy('id', 'desc')->paginate(3);
     return view('pages.services.list',compact('services','categories'))
     ->with('i', (request()->input('page', 1) - 1) * 5);
 
@@ -30,7 +30,7 @@ class ServicesController extends Controller
     public function lists($id): View
     {
         $categories =  Categories::all();
-        $services = Services::where('category_id',$id)->paginate(3);
+        $services = Services::where('category_id',$id)->orderBy('id', 'desc')->paginate(3);
         return view('pages.services.list',compact('services','categories'))
             ->with('i', (request()->input('page', 1) - 1) * 5);
 
@@ -144,26 +144,32 @@ class ServicesController extends Controller
     }
     public function audit()
     {
-        return view('site.pages.services.audit');
+        $services = DB::table('services')->where('category_id', '=', 1)->where('title', '!=', 'Description')->get();
+        $descriptions = DB::table('services')->where('category_id', '=', 1)->where('title', '=', 'Description')->get();
+        return view('site.pages.services.audit' ,compact('services','descriptions'));
     }
     public function tax()
     {
-        return view('site.pages.services.tax');
+        $services = DB::table('services')->where('category_id', '=', 2)->get();
+        return view('site.pages.services.tax' ,compact('services'));
     }
 
     public function legal()
     {
-        return view('site.pages.services.legal');
+        $services = DB::table('services')->where('category_id', '=', 3)->get();
+        return view('site.pages.services.legal' ,compact('services'));
     }
 
     public function advisory()
     {
-        return view('site.pages.services.advisory');
+        $services = DB::table('services')->where('category_id', '=', 4)->get();
+        return view('site.pages.services.advisory' ,compact('services'));
     }
 
     public function training()
     {
-        return view('site.pages.services.training');
+        $services = DB::table('services')->where('category_id', '=', 5)->get();
+        return view('site.pages.services.training' ,compact('services'));
     }
 
     public function payroll()
@@ -174,6 +180,7 @@ class ServicesController extends Controller
 
     public function cashDistribution()
     {
-        return view('site.pages.services.cash-distribution');
+        $services = DB::table('services')->where('category_id', '=', 7)->get();
+        return view('site.pages.services.cash-distribution' ,compact('services'));
     }
 }

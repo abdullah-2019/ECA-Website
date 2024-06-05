@@ -43,7 +43,7 @@
                             <span>{{ $team->position }}</span>
 
                                 @php echo $team->description @endphp
-                            
+
                         </div>
                     </div>
                 </div>

@@ -139,8 +139,8 @@
                             <div class="card card-just-text" data-background="color" data-color="blue" data-radius="none">
                          <a href="{{ route('events.show',$event->id) }}" target="_blank">
                              <div class="card-image">
+
                                 <div class="hover-text">
-                                    <b>@php $temp = explode(' ',$event->created_at); echo $temp[0]; @endphp</b>
                                     <img src="{{ asset($event->image)  }}" class="card-img-top" alt="...">
                                 </div>
                             </div>
@@ -173,6 +173,7 @@
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="btn btn-danger btn-sm"><i class="fa-solid fa-trash"></i> Delete</button>
+                                        <a>@php $temp = explode(' ',$event->created_at); echo $temp[0]; @endphp</a>
                                     </form>
                                 </p>
                             </div>

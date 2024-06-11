@@ -5,10 +5,6 @@
         position: relative;
     }
 
-    .coloured-cards .card {
-        margin-top: 30px;
-    }
-
     .card[data-radius="none"] {
         border-radius: 0px;
     }
@@ -17,7 +13,7 @@
         box-shadow: 0 2px 2px rgba(204, 197, 185, 0.5);
         background-color: #FFFFFF;
         color: #252422;
-        margin-bottom: 20px;
+        margin-bottom: 0px;
         position: relative;
         z-index: 1;
     }
@@ -27,11 +23,12 @@
         color: #FFFFFF;
     }
     .card.card-just-text .content {
-        padding: 50px 65px;
-        text-align: center;
+        padding: 5px 5px;
+        text-align: left;
+        text-justify: newspaper!important;
     }
     .card .content {
-        padding: 20px 20px 10px 20px;
+        padding: 10px 10px 0px 10px;
     }
     .card[data-color="blue"] .category {
         color: #7a9e9f;
@@ -69,9 +66,7 @@
         font-size: 16px;
         color: #66615b;
     }
-    .content-card{
-        margin-top:30px;
-    }
+
     a:hover, a:focus {
         text-decoration: none;
     }
@@ -110,15 +105,42 @@
         <!-- Main content -->
         <section class="content">
             <div class="container-fluid">
-            <div class="row row-cols-1 row-cols-md-3 g-4">
+                @session('success')
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <i class="fa fa-ticket"></i> &nbsp; &nbsp; &nbsp; &nbsp;{{ $value }}
+                    <button type="button" class="btn btn-tool" data-card-widget="remove">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                @endsession
+                <div class="row ">
+                    <div class="col-md-4">
+                        <form class="float-left" action="{{ route('events.search') }}" method="GET">
+                            <div class="input-group">
+                                <input name="search" class="form-control form-control-sidebar" type="search" placeholder="Search" aria-label="Search">
+                                <div class="input-group-append">
+                                    <button  type="submit" class="btn btn-sidebar btn-dark">
+                                        <i class="fas fa-search fa-fw"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="col-md-4"></div>
+                    <div class="col-md-4">
+                        <a class="btn btn-success btn-sm float-right" href="{{ route('events.create') }}"> <i class="fa fa-plus"></i> Add New</a>
+                    </div>
+                </div>
+            <div class="row">
                 @forelse ($events as $event)
-                    <div class="col-md-4 col-sm-6 content-card">
-                        
+                    <div class="col-md-4 col-sm-6">
+                        <div class="content-card">
                         <div class="card-big-shadow">
                             <div class="card card-just-text" data-background="color" data-color="blue" data-radius="none">
-                         <a href="#" target="_blank">
+                         <a href="{{ route('events.show',$event->id) }}" target="_blank">
                              <div class="card-image">
                                 <div class="hover-text">
+                                    <b>@php $temp = explode(' ',$event->created_at); echo $temp[0]; @endphp</b>
                                     <img src="{{ asset($event->image)  }}" class="card-img-top" alt="...">
                                 </div>
                             </div>
@@ -140,31 +162,35 @@
                             }
                             echo $string;
                                 @endphp</p>
+                                @endif
                                 <p class="description">
                                     <form action="{{ route('events.destroy',$event->id) }}" method="POST">
 
                                         <a class="btn btn-info btn-sm" href="{{ route('events.show',$event->id) }}"><i class="fa-solid fa-list"></i> Show</a>
-            
+
                                         <a class="btn btn-primary btn-sm" href="{{ route('events.edit',$event->id) }}"><i class="fa-solid fa-pen-to-square"></i> Edit</a>
-            
+
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="btn btn-danger btn-sm"><i class="fa-solid fa-trash"></i> Delete</button>
                                     </form>
                                 </p>
                             </div>
-
                         </div>
+                    </div>
+                    </div>
                     </div>
                     @empty
                     <div class="col-md-4">
                         <p >There are no data.</p>
                     </div>
                  @endforelse
-                 
+
             </div>
+                {!! $events->withQueryString()->links('pagination::bootstrap-5') !!}
+
         </div>
     </section>
-    
+
 @endsection
 @endauth

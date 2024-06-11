@@ -82,8 +82,33 @@
         <!-- Main content -->
         <section class="content">
             <div class="container-fluid">
-
-        <div class="row">   
+                @session('success')
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <i class="fa fa-ticket"></i> &nbsp; &nbsp; &nbsp; &nbsp;{{ $value }}
+                    <button type="button" class="btn btn-tool" data-card-widget="remove">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                @endsession
+                <div class="row mb-4">
+                    <div class="col-md-4">
+                        <form class="float-left" action="{{ route('news.search') }}" method="GET">
+                            <div class="input-group">
+                                <input name="search" class="form-control form-control-sidebar" type="search" placeholder="Search" aria-label="Search">
+                                <div class="input-group-append">
+                                    <button  type="submit" class="btn btn-sidebar btn-dark">
+                                        <i class="fas fa-search fa-fw"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="col-md-4"></div>
+                    <div class="col-md-4">
+                        <a class="btn btn-success btn-sm float-right" href="{{ route('news.create') }}"> <i class="fa fa-plus"></i> Add New</a>
+                    </div>
+                </div>
+        <div class="row mb-5">
                 @forelse ($news as $new)
             <div class=" col-lg-4 col-md-4 col-sm-4 ">
                 <div class="solution_cards_box mb-0">
@@ -100,7 +125,7 @@
                         <div class="solu_description">
                             <p>
                             @php
-                                    $lastLetter = strip_tags($new->description);
+                                    $lastLetter = strip_tags( $new->description);
                                  $string = $lastLetter;
                             if (strlen($string) > 150) {
                                 $stringCut = substr($string, 0, 150);
@@ -111,10 +136,10 @@
                             echo $string;
                                 @endphp
                                 <br>
-                                <b class=" text-decoration-none text-dark fw-bolder mr-4" >{{ $new->created_at }}</b>
+                                <b class=" text-decoration-none text-dark fw-bolder mr-4" >@php $temp = explode(' ',$new->created_at); echo $temp[0]; @endphp</b>
                             </p>
                             <p>
-                            
+
                             <form action="{{ route('news.destroy',$new->id) }}" method="POST">
 
                             <a class="btn btn-info btn-sm" href="{{ route('news.show',$new->id) }}"><i class="fa-solid fa-list"></i> Show</a>
@@ -127,6 +152,7 @@
                             </form>
                             </p>
                         </div>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -136,8 +162,12 @@
         </div>
         @endforelse
         </div>
+                {!! $news->withQueryString()->links('pagination::bootstrap-5') !!}
     </div>
-    
+
+
+
 </section>
+
 @endsection
 @endauth

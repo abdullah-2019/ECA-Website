@@ -115,7 +115,7 @@
                     </li>
                     <li class="nav-item">
                         <a href="{{ route('contact.list') }}" class="nav-link">
-                            <i class="nav-icon fas fa-edit"></i>
+                            <i class="nav-icon far fa-envelope"></i>
                             <p>
                                 Contact Us
                                 <i class="fas fa-angle-left right"></i>
@@ -133,7 +133,7 @@
                     </li>
                     <li class="nav-item">
                         <a href="{{ route('news.list') }}" class="nav-link">
-                            <i class="nav-icon fas fa-chart-pie"></i>
+                            <i class="nav-icon fas fa-edit"></i>
                             <p>
                                 News
                                 <i class="right fas fa-angle-left"></i>
@@ -142,7 +142,7 @@
                     </li>
                     <li class="nav-item">
                         <a href="{{ route('events.list') }}" class="nav-link">
-                            <i class="nav-icon fas fa-tree"></i>
+                            <i class="nav-icon fas fa-columns"></i>
                             <p>
                                 Events
                                 <i class="fas fa-angle-left right"></i>

@@ -90,6 +90,17 @@
                                 @enderror
                             </div>
 
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Date</label>
+                                <input type="date" name="created_at" class="form-control @error('created_at') is-invalid @enderror"
+                                       id="inputName"
+                                       value="@php $temp = explode(' ',$news->created_at); echo $temp[0]; @endphp"
+                                       placeholder="Title">
+                                @error('created_at')
+                                <div class="form-text text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+
 
                         </div>
                         <!-- /.card-body -->

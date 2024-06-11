@@ -22,7 +22,7 @@
         <div class="container-fluid">
             <div class="card card-primary">
                 <div class="card-header">
-                    <h3 class="card-title">{{ $events->title }}</h3>
+                    <h3 class="card-title">{{ $events->title }} ( @php $temp = explode(' ',$events->created_at); echo $temp[0]; @endphp )</h3>
 
                     <div class="card-tools">
                         <a class="btn btn-primary btn-sm" href="{{ route('events.list') }}"><i class="fa fa-arrow-left"></i> Back</a>

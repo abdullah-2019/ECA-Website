@@ -132,6 +132,24 @@
                         </a>
                     </li>
                     <li class="nav-item">
+                        <a href="{{ route('news.list') }}" class="nav-link">
+                            <i class="nav-icon fas fa-chart-pie"></i>
+                            <p>
+                                News
+                                <i class="right fas fa-angle-left"></i>
+                            </p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ route('events.list') }}" class="nav-link">
+                            <i class="nav-icon fas fa-tree"></i>
+                            <p>
+                                Events
+                                <i class="fas fa-angle-left right"></i>
+                            </p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
                         <a href="{{ route('logout.perform') }}" class="nav-link">
                             <i class="nav-icon far fa-plus-square"></i>
                             <p>

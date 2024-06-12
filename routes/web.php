@@ -12,7 +12,8 @@ use App\Http\Controllers\SectorController;
 use App\Http\Controllers\TeamController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ServicesController;
-
+use App\Http\Controllers\NewsController;
+use App\Http\Controllers\EventsController;
 Route::get('/', function () {
     return view('welcome');
 });
@@ -105,6 +106,24 @@ Route::group(['namespace' => 'App\Http\Controllers'], function () {
         Route::put('/home/update/{id}', [HomeController::class, 'update'])->name('home.update');
         Route::delete('/home/destroy/{id}', [HomeController::class, 'destroy'])->name('home.destroy');
         Route::get('/home/search', [HomeController::class, 'search'])->name('home.search');
+
+        Route::get('/news/create', [NewsController::class, 'create'])->name('news.create');
+        Route::post('/news/store',[NewsController::class, 'store'])->name('news.store');
+        Route::get('/news/list', [NewsController::class, 'list'])->name('news.list');
+        Route::get('/news/edit/{id}', [NewsController::class, 'edit'])->name('news.edit');
+        Route::get('/news/show/{id}', [NewsController::class, 'show'])->name('news.show');
+        Route::put('/news/update/{id}', [NewsController::class, 'update'])->name('news.update');
+        Route::delete('/news/destroy/{id}', [NewsController::class, 'destroy'])->name('news.destroy');
+        Route::get('/news/search', [NewsController::class,'search'])->name('news.search');
+
+        Route::get('/events/create', [EventsController::class, 'create'])->name('events.create');
+        Route::post('/events/store',[EventsController::class, 'store'])->name('events.store');
+        Route::get('/events/list', [EventsController::class, 'list'])->name('events.list');
+        Route::get('/events/edit/{id}', [EventsController::class, 'edit'])->name('events.edit');
+        Route::get('/events/show/{id}', [EventsController::class, 'show'])->name('events.show');
+        Route::put('/events/update/{id}', [EventsController::class, 'update'])->name('events.update');
+        Route::delete('/events/destroy/{id}', [EventsController::class, 'destroy'])->name('events.destroy');
+        Route::get('/events/search', [EventsController::class,'search'])->name('events.search');
 
         Route::get('/login/home', [HomeController::class, 'index'])->name('auth.login');
         Route::get('/dashboards', [HomeController::class, 'wellcome'])->name('dashboard');

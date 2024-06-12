@@ -28,25 +28,34 @@
                 <br>
                 <br>
                 <br>
-                    @foreach($teams as $team)
-                <div class="col-lg-4 col-md-6 d-flex align-items-stretch">
-                    <div class="member">
-                        <div class="member-img">
+                @foreach ($teams as $team)
+                    <div class="col-lg-4 col-md-6 d-flex align-items-stretch">
+                        <div class="member">
+                            {{-- <div class="member-img">
                             <img src="{{ asset($team->image) }}" class="img-fluid" alt="image"
                                 loading="lazy">
                             <div class="social">
                                 @php echo $team->social_links @endphp
                             </div>
-                        </div>
-                        <div class="member-info">
-                            <h4>{{ $team->title }}</h4>
-                            <span>{{ $team->position }}</span>
+                        </div> --}}
+                            <div class="member-info">
+                                <div style="display: flex; flex-direction: row; align-items: center;  padding-left: 0px;">
+                                    <img src="{{ asset($team->image) }}" alt="profile" loading="lazy"
+                                        style="width: 60px; hieght: 60px; border-radius: 50%; margin: 0px; 0px;">
+                                    <div style="margin: 0px 10px;">
+                                        <h4 class="" style=" margin-bottom: 0px;">
+                                            <small>{{ $team->title }}</small>
+                                        </h4>
+                                        <span
+                                            style="margin-top: 0px;"><small><small>{{ $team->position }}</small></small></span>
+                                    </div>
+                                </div>
 
                                 @php echo $team->description @endphp
 
+                            </div>
                         </div>
                     </div>
-                </div>
                 @endforeach
             </div>
 

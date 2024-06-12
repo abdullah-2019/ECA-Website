@@ -20,17 +20,20 @@
     <section class="features">
         <div class="container">
 
-            <div class="section-title">
+            {{-- <div class="section-title">
                 <h2>About ECA</h2>
                 <p>EAGLE WISE Chartered Accountants Company shaping The Future Together</p>
-            </div>
-            @php $x=1; $order1=" order-1 order-md-2"; $order2=" order-2 order-md-1"; @endphp
+            </div> --}}
+            @php
+                $x = 1;
+                $order1 = ' order-1 order-md-2';
+                $order2 = ' order-2 order-md-1';
+            @endphp
             @foreach ($abouts as $about)
-                @if($x%2==0)
+                @if ($x % 2 == 0)
                     <div class="row" data-aos="fade-up">
                         <div class="col-md-5 {{ $order1 }}">
-                            <img src="{{ asset($about->image) }}" class="img-fluid" alt="why us"
-                                 loading="lazy">
+                            <img src="{{ asset($about->image) }}" class="img-fluid" alt="why us" loading="lazy">
                         </div>
                         <div class="col-md-7 pt-5 {{ $order2 }}">
                             <h3>{{ $about->title }}</h3>
@@ -40,8 +43,7 @@
                 @else
                     <div class="row" data-aos="fade-up">
                         <div class="col-md-5 {{ $order2 }}">
-                            <img src="{{ asset($about->image) }}" class="img-fluid" alt="why us"
-                                 loading="lazy">
+                            <img src="{{ asset($about->image) }}" class="img-fluid" alt="why us" loading="lazy">
                         </div>
                         <div class="col-md-7 pt-5 {{ $order1 }}">
                             <h3>{{ $about->title }}</h3>
@@ -60,17 +62,16 @@
     <section class="facts section-bg aos-init aos-animate" data-aos="fade-up">
         <div class="container">
             @foreach ($privacy as $privac)
-            <div class="row">
-                <div class="col-lg-6">
-                    <img src="{{ asset($privac->image) }}" class="img-fluid" alt="">
-                </div>
-                <div class="col-lg-6 pt-4 pt-lg-0">
-                    <h3>{{ $privac->title }}</h3>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <img src="{{ asset($privac->image) }}" class="img-fluid" alt="">
+                    </div>
+                    <div class="col-lg-6 pt-4 pt-lg-0">
+                        <h3>{{ $privac->title }}</h3>
 
-                    @php echo $privac->description @endphp
+                        @php echo $privac->description @endphp
+                    </div>
                 </div>
-            </div>
-
             @endforeach
 
         </div>

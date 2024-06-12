@@ -139,30 +139,33 @@
 
         </div>
     </section>
-@php $left="eca-timeline-left"; $right="eca-timeline-right"; @endphp
+    @php
+        $left = 'eca-timeline-left';
+        $right = 'eca-timeline-right';
+    @endphp
     <section>
         <div class="container">
-            @foreach($descriptions as $description)
-            <p>
-               @php echo $description->description @endphp
-            </p>
+            @foreach ($descriptions as $description)
+                <p>
+                    @php echo $description->description @endphp
+                </p>
             @endforeach
         </div>
         <div class="eca-timeline">
-            @foreach($services as $service)
-                @if($service->id%2==0)
-            <div class="eca-container @php echo $left @endphp" data-aos="fade-up" data-aos-easing="ease-in-out"
-                data-aos-duration="1000">
-                <div class="content">
-                    <h2 class="eca-timeline-title">{{ $service->title }}</h2>
-                    <p class="eca-timeline-p">
-                        @php echo $service->description @endphp
-                    </p>
-                </div>
-            </div>
+            @foreach ($services as $service)
+                @if ($service->id % 2 == 0)
+                    <div class="eca-container @php echo $left @endphp" data-aos="fade-up" data-aos-easing="ease-in-out"
+                        data-aos-duration="1000">
+                        <div class="content">
+                            <h2 class="eca-timeline-title">{{ $service->title }}</h2>
+                            <p class="eca-timeline-p">
+                                @php echo $service->description @endphp
+                            </p>
+                        </div>
+                    </div>
                 @else
                     <div class="eca-container @php echo $right @endphp" data-aos="fade-up" data-aos-easing="ease-in-out"
-                         data-aos-duration="1000">
+                        data-aos-duration="1000">
                         <div class="content">
                             <h2 class="eca-timeline-title">{{ $service->title }}</h2>
                             <p class="eca-timeline-p">
